@@ -28,7 +28,7 @@ d3.csv("Results.csv",
 
   // When reading the csv, I must format variables:
   function(d){
-    return { Timestamp : d3.timeParse("%Y-%m-%d %X.%L")(d.Timestamp), Price : d.Price }
+    return { Timestamp : d3.timeParse("%Y-%m-%d %H:%M:%S.%L")(d.date), Price : d.value }
   },
 
   // Now I can use this dataset:
@@ -56,8 +56,8 @@ d3.csv("Results.csv",
       .attr("stroke", "steelblue")
       .attr("stroke-width", 1.5)
       .attr("d", d3.line()
-        .x(function(d) { return x(d.Timestamp) })
-        .y(function(d) { return y(d.Price) })
+        .x(function(d) { return x(d.date) })
+        .y(function(d) { return y(d.value) })
         )
 
 })
