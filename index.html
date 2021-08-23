@@ -21,7 +21,7 @@ var svg = d3.select("#graph")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("https://github.com/p2v-aot/Random-Public/blob/8de6fe392054506e633bcb5384994bdcef49ca42/Results.csv", function(data) {
+d3.csv("Results.csv", function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()
