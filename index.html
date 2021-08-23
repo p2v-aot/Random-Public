@@ -12,7 +12,7 @@
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 60},
     width = 2024 - margin.left - margin.right,
-    height = 1750 - margin.top - margin.bottom;
+    height = 1400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -28,7 +28,7 @@ d3.csv("Results.csv",
 
   // When reading the csv, I must format variables:
   function(d){
-    return { Timestamp : d3.timeParse("%Y-%m-%d %H:%M:%S.%L")(d.Timestamp), Price : d.Price }
+    return { Timestamp : d3.timeParse("%Y-%m-%d %H:%M:%S.%L")(d.Timestamp), Price : d.Price, CallPut : d.CallPut }
   },
 
   // Now I can use this dataset:
@@ -51,7 +51,7 @@ d3.csv("Results.csv",
 
   // Color scale: give me a specie name, I return a color
   var color = d3.scaleOrdinal()
-    .domain(["C","P" ])
+    .domain(["C","P"])
     .range([ "#440154ff", "#21908dff"])
 
     // Add the line
