@@ -46,7 +46,7 @@ d3.csv("Results.csv",
     var y0 = d3.scaleLinear()
       .domain([0, 100])
       .range([ height, 0])
-      orient("left");
+      .orient("left");
     svg.append("g")
       .call(d3.axisLeft(y0));
 
