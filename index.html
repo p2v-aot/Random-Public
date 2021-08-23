@@ -43,16 +43,23 @@ d3.csv("Results.csv",
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    var y = d3.scaleLinear()
+    var y0 = d3.scaleLinear()
       .domain([0, 1000])
-      .range([ height, 0 ]);
+      .range([ height, 0]);
     svg.append("g")
-      .call(d3.axisLeft(y));
+      .call(d3.axisLeft(y0));
+
+    // Add Y axis
+    var y1 = d3.scaleLinear()
+      .domain([0, 1000])
+      .range([ height, 0]);
+    svg.append("g")
+      .call(d3.axisLeft(y1));
 
     // Color scale: give me a specie name, I return a color
     var color = d3.scaleOrdinal()
       .domain(["C","P"])
-      .range([ "#440154ff", "#21908dff"])
+      .range([ "#ff2812", "#afc065"])
 
     // Add the dots
     svg.append('g')
@@ -61,7 +68,7 @@ d3.csv("Results.csv",
       .enter()
       .append("circle")
         .attr("cx", function (d) { return x(d.Timestamp); } )
-        .attr("cy", function (d) { return y(d.Price); } )
+        .attr("cy", function (d) { return y0(d.Price); } )
         .attr("r", 5)
         .style("fill", function (d) { return color(d.CallPut) } )
 
@@ -72,7 +79,7 @@ d3.csv("Results.csv",
       .attr("stroke-width", 1.5)
       .attr("d", d3.line()
         .x(function(d) { return x(d.Timestamp) })
-        .y(function(d) { return y(d.UnderLastTradePrice) })
+        .y(function(d) { return y1(d.UnderLastTradePrice) })
         )
 })
 </script>
