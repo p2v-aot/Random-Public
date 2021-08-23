@@ -11,8 +11,8 @@
   
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 1024 - margin.left - margin.right,
-    height = 2048 - margin.top - margin.bottom;
+    width = 2024 - margin.left - margin.right,
+    height = 1750 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -49,16 +49,21 @@ d3.csv("Results.csv",
     svg.append("g")
       .call(d3.axisLeft(y));
 
+  // Color scale: give me a specie name, I return a color
+  var color = d3.scaleOrdinal()
+    .domain(["C","P" ])
+    .range([ "#440154ff", "#21908dff"])
+
     // Add the line
-    svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return x(d.Timestamp) })
-        .y(function(d) { return y(d.Price) })
-        )
+    svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("cx", function (d) { return x(d.Timestamp); } )
+      .attr("cy", function (d) { return y(d.Price); } )
+      .attr("r", 5)
+      .style("fill", function (d) { return color(d.CallPut) } )
 
 })
 </script>
