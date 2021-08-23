@@ -54,7 +54,7 @@ d3.csv("Results.csv",
       .domain([0, 1000])
       .range([ height, 0]);
     svg.append("g")
-      .call(d3.axisLeft(y1));
+      .call(d3.axisRight(y1));
 
     // Color scale: give me a specie name, I return a color
     var color = d3.scaleOrdinal()
