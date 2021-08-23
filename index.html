@@ -45,17 +45,16 @@ d3.csv("Results.csv",
     // Add Y0 axis
     var y0 = d3.scaleLinear()
       .domain([0, 100])
-      .range([ height, 0])
-      .orient("left");
+      .range([ height, 0]);
     svg.append("g")
       .call(d3.axisLeft(y0));
 
     // Add Y1 axis
     var y1 = d3.scaleLinear()
       .domain([600, 720])
-      .range([ height, 0])
-      .orient("right");
+      .range([ height, 0]);
     svg.append("g")
+      .attr("transform", "translate( " + width + ", 0 )")
       .call(d3.axisRight(y1));
 
     // Color scale: give me a specie name, I return a color
