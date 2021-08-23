@@ -26,41 +26,28 @@ var svg = d3.select("#my_dataviz")
 //Read the data
 d3.csv("Results-OI.csv",
 
-  // When reading the csv, I must format variables:
   function(d){
     return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Quantity: d.Quantity }
   },
 
-  // Now I can use this dataset:
   function(data) {
 
-    // Add X axis --> it is a date format
-    var z = d3.scaleTime()
-      .domain(d3.extent(data, function(d) { return d.TradingDate; }))
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(z));
-
-    var x = d3.scaleLinear()
-      .domain(d3.extent(data, function(d) { return d.StrikePrice}))
+    var x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { return d.StrikePrice; }))
       .range([ 0, width ]);
     svg.append("g")
       .call(d3.axisBottom(x));
 
-    // Add Y0 axis
     var y = d3.scaleLinear()
       .domain(d3.extent(data, function(d) { return d.Quantity}))
       .range([ height, 0 ]);
     svg.append("g")
       .call(d3.axisLeft(y));
 
-    // Color scale: give me a specie name, I return a color
     var color = d3.scaleOrdinal()
       .domain(["C","P"])
       .range([ "#ff2812", "#afc065"])
 
-    // Add the dots
     svg.append('g')
       .selectAll("dot")
       .data(data)
@@ -68,7 +55,6 @@ d3.csv("Results-OI.csv",
       .append("circle")
         .attr("cx", function (d) { return x(d.StrikePrice); } )
         .attr("cy", function (d) { return y(d.Quantity); } )
-        .attr("cz", function (d) { return z(d.TradingDate)})
         .attr("r", 5)
         .style("fill", function (d) { return color(d.CallPut) } )
 
