@@ -33,7 +33,7 @@
             .call(d3.axisBottom(x));
 
     var y = d3.scaleLinear()
-        .domain([d3.min(data,function(d) {return +d.AVGPriceDiff}), d3.max(data, function(d) { return +d.AVGPriceDiff; })])
+        .domain([-100, 100])
         .range([ height, 0 ]);
         svg.append("g")
             .call(d3.axisLeft(y));
