@@ -80,9 +80,11 @@
             .on("mouseover", tipMouseover)
             .on("mouseout", tipMouseout);
 
-    svg.selectAll("bar")
+    svg.append('g')
+        .selectAll("bar")
         .data(data)
-        .enter().append("rect")
+        .enter()
+        .append("rect")
             .attr("x", function(d) { return x(d.TradingDate); })
             .attr("width", x.rangeBand())
             .attr("y", function(d) { return y1(d.Volume); })
