@@ -69,29 +69,9 @@ d3.csv("Results-OI.csv",
       .call(d3.axisLeft(y0))
       .text("Strike Price");
 
-    var y1 = d3.scaleLinear()
-      .domain(d3.extent(data, function(d) { return d.Quantity}))
-      .range([ height, 0 ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + width + ")")
-      .call(d3.axisLeft(y1))
-      .text("Open Interest");
-
     var color = d3.scaleOrdinal()
       .domain(["C","P"])
       .range([ "#ff2812", "#afc065"])
-
-    svg.append('g')
-      .selectAll("dot")
-      .data(data)
-      .enter()
-      .append("circle")
-        .attr("cx", function (d) { return x(d.StrikePrice); } )
-        .attr("cy", function (d) { return y0(d.Quantity); } )
-        .attr("r", 5)
-        .style("fill", function (d) { return color(d.CallPut) } )
-        .on("mouseover", tipMouseover)
-        .on("mouseout", tipMouseout);
 
     // Add the tooltip container to the vis container
     // it's invisible and its position/contents are defined during mouseover
@@ -101,9 +81,8 @@ d3.csv("Results-OI.csv",
 
     // tooltip mouseover event handler
     var tipMouseover = function(d) {
-      var color = colorScale(d.manufacturer);
       var html  = d.TradingDate + "<br/>" +
-      "<span style='color:" + color + ";'>" + d.CallPut + "</span><br/>" +
+      "<span>" + d.CallPut + "</span><br/>" +
       "<b>" + d.StrikePrice + "</b> sugar, <b/>" + d.Quantity + "</b> calories";
 
     tooltip.html(html)
@@ -121,6 +100,18 @@ d3.csv("Results-OI.csv",
       .duration(300) // ms
       .style("opacity", 0); // don't care about position!
     };
+
+    svg.append('g')
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+        .attr("cx", function (d) { return x(d.StrikePrice); } )
+        .attr("cy", function (d) { return y0(d.Quantity); } )
+        .attr("r", 5)
+        .style("fill", function (d) { return color(d.CallPut) } )
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 })
 </script>
 </body>
