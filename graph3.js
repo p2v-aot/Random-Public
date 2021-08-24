@@ -32,7 +32,7 @@
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
 
-    var y = d3.scaleLog()
+    var y = d3.scaleLinear()
         .domain([d3.min(data,function(d) {return +d.AVGPriceDiff}), d3.max(data, function(d) { return +d.AVGPriceDiff; })])
         .range([ height, 0 ]);
         svg.append("g")
