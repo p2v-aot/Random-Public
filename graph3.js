@@ -13,7 +13,7 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     //Read the data
-    d3.csv("Results-OI.csv",
+    d3.csv("Results-AVGPrice.csv",
 
     function(d){
         return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Volume: d.Volume, AVGPrice: d.AVGPrice }
