@@ -33,7 +33,7 @@
             .call(d3.axisBottom(x));
 
     var y = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.Quantity}))
+        .domain([0, d3.max(data, function(d) { return +d.Quantity; })])
         .range([ height, 0 ]);
         svg.append("g")
             .call(d3.axisLeft(y));
@@ -54,7 +54,7 @@
             .attr("d", function(d){
               return d3.line()
                 .x(function(d) { return x(d.TradingDate); })
-                .y(function(d) { return y(d.Quantity); })
+                .y(function(d) { return y(+d.Quantity); })
                 (d.values)
             })
 });
