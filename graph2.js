@@ -15,9 +15,9 @@
     //Read the data
     d3.csv("Results-OI.csv",
 
-    //function(d){
-    //    return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Quantity: d.Quantity }
-    //},
+    function(d){
+        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Quantity: d.Quantity }
+    },
 
     function(data) {
 
@@ -49,7 +49,7 @@
         .enter()
         .append("path")
             .attr("fill", "none")
-            .attr("stroke", function(d){ return color(d.Timestamp) })
+            .attr("stroke", function(d){ return color(d.key) })
             .attr("stroke-width", 1.5)
             .attr("d", function(d){
               return d3.line()
