@@ -52,7 +52,7 @@
             .attr("stroke-width", 1.5)
             .attr("d", function(d){
               return d3.line()
-                .x(function(d) { return x(d.year); })
+                .x(function(d) { return x(d.Timestamp); })
                 .y(function(d) { return y(+d.Quantity); })
                 (d.values)
             })
