@@ -56,6 +56,23 @@
         .domain(res)
         .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
+    // add the X gridlines
+    svg.append("g")			
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(make_x_gridlines()
+            .tickSize(-height)
+            .tickFormat("")
+        )
+
+    // add the Y gridlines
+    svg.append("g")			
+        .attr("class", "grid")
+        .call(make_y_gridlines()
+            .tickSize(-width)
+            .tickFormat("")
+        )
+
     svg.selectAll(".line")
         .data(strike)
         .enter()
