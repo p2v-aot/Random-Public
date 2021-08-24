@@ -48,6 +48,7 @@
         .data(strike)
         .enter()
         .append("path")
+            .attr("fill", "none")
             .attr("stroke", function(d){ return color(d.key) })
             .attr("stroke-width", 1.5)
             .attr("d", function(d){
