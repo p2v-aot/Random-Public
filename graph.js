@@ -49,7 +49,7 @@
     var tipMouseover = function(d) {
       var html  = d.TradingDate + "<br/>" +
       "<span>" + d.CallPut + "</span><br/>" +
-      "<b>" + d.StrikePrice + "</b> sugar, <b/>" + d.Quantity + "</b> calories";
+      "<b>" + d.StrikePrice + "</b> Strike, <b/>" + d.Quantity;
 
     tooltip.html(html)
       .style("left", (d3.event.pageX + 15) + "px")
