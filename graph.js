@@ -21,61 +21,56 @@
 
     function(data) {
 
-    var x = d3.scaleTime()
-      .domain(d3.extent(data, function(d) { return d.StrikePrice; }))
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+    var x = d3.scaleLinear()
+        .domain(d3.extent(data, function(d) { return d.StrikePrice; }))
+        .range([ 0, width ]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
 
-    var y0 = d3.scaleLinear()
-      .domain(d3.extent(data, function(d) { return d.Quantity}))
-      .range([ height, 0 ]);
-    svg.append("g")
-      .call(d3.axisLeft(y0))
-      .text("Strike Price");
+    var y = d3.scaleLinear()
+        .domain(d3.extent(data, function(d) { return d.Quantity}))
+        .range([ height, 0 ]);
+        svg.append("g")
+            .call(d3.axisLeft(y))
+            .text("Strike Price");
 
     var color = d3.scaleOrdinal()
-      .domain(["C","P"])
-      .range([ "#ff2812", "#afc065"])
+        .domain(["C","P"])
+        .range([ "#ff3333", "#66ff33"])
 
-    // Add the tooltip container to the vis container
-    // it's invisible and its position/contents are defined during mouseover
     var tooltip = d3.select("#my_dataviz").append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 0);
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
-    // tooltip mouseover event handler
     var tipMouseover = function(d) {
-      var html  = d.TradingDate + "<br/>" +
-      "<span>" + d.CallPut + "</span><br/>" +
-      "<b>" + d.StrikePrice + "</b> Strike, <b/>" + d.Quantity;
+        var html  = d.TradingDate + "<br/>" +
+        "<span>" + d.CallPut + "</span><br/>" +
+        "<b>" + d.StrikePrice + "</b> Strike, <b/>" + d.Quantity;
 
-    tooltip.html(html)
-      .style("left", (d3.event.pageX + 15) + "px")
-      .style("top", (d3.event.pageY - 28) + "px")
-      .transition()
-      .duration(200)
-      .style("opacity", .9)
-
+        tooltip.html(html)
+            .style("left", (d3.event.pageX + 15) + "px")
+            .style("top", (d3.event.pageY - 28) + "px")
+            .transition()
+            .duration(200)
+            .style("opacity", .9)
     };
-    
-    // tooltip mouseout event handler
+
     var tipMouseout = function(d) {
-      tooltip.transition()
-      .duration(300) // ms
-      .style("opacity", 0); // don't care about position!
+        tooltip.transition()
+        .duration(300) // ms
+        .style("opacity", 0);
     };
 
     svg.append('g')
-      .selectAll("dot")
-      .data(data)
-      .enter()
-      .append("circle")
-        .attr("cx", function (d) { return x(d.StrikePrice); } )
-        .attr("cy", function (d) { return y0(d.Quantity); } )
-        .attr("r", 5)
-        .style("fill", function (d) { return color(d.CallPut) } )
-        .on("mouseover", tipMouseover)
-        .on("mouseout", tipMouseout);
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", function (d) { return x(d.StrikePrice); } )
+            .attr("cy", function (d) { return y(d.Quantity); } )
+            .attr("r", 5)
+            .style("fill", function (d) { return color(d.CallPut) } )
+            .on("mouseover", tipMouseover)
+            .on("mouseout", tipMouseout);
 });
