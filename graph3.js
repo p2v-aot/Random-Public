@@ -44,11 +44,15 @@
         .domain(res)
         .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
+    var CPcolor = d3.scaleOrdinal()
+        .domain(["C","P"])
+        .range([ "#ff3333", "#66ff33"])
+
     svg.selectAll(".line")
         .data(strike)
         .enter()
         .append("path")
-            .attr("fill", "none")
+        .style("fill", function (d) { return CPcolor(d.CallPut) } )
             .attr("stroke", function(d){ return color(d.key) })
             .attr("stroke-width", 1.5)
             .attr("d", function(d){
