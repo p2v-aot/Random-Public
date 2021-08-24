@@ -52,7 +52,7 @@
     var tipMouseover = function(d) {
         var html  = d.TradingDate + "<br/>" +
         "<span>" + d.CallPut + "</span><br/>" +
-        "<b>" + d.StrikePrice + "</b> Strike, <b>" + d.Volume + "</b>";
+        "<b>" + d.StrikePrice + "</b> Strike, <b>" + d.AVGPrice + "</b>";
 
         tooltip.html(html)
             .style("left", (d3.event.pageX + 15) + "px")
@@ -85,8 +85,8 @@
         .enter().append("rect")
             .attr("x", function(d) { return x(d.TradingDate); })
             .attr("width", x.rangeBand())
-            .attr("y", function(d) { return y(d.Volume); })
+            .attr("y", function(d) { return y1(d.Volume); })
             .attr("height", function(d) { return height - y(d.Volume); })
-            .style("fill", function (d) { return color(d.CallPut) } )
+            .style("fill", function (d) { return color(d.CallPut) } );
 
 });
