@@ -32,8 +32,7 @@
         .domain(d3.extent(data, function(d) { return d.Quantity}))
         .range([ height, 0 ]);
         svg.append("g")
-            .call(d3.axisLeft(y))
-            .text("Strike Price");
+            .call(d3.axisLeft(y));
 
     var color = d3.scaleOrdinal()
         .domain(["C","P"])
