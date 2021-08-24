@@ -16,7 +16,7 @@
     d3.csv("Results-AVGPrice.csv",
 
     function(d){
-        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Volume: d.Volume, AVGPrice: d.AVGPrice }
+        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Volume: d.Volume, AVGPriceDiff: d.AVGPriceDiff }
     },
 
     function(data) {
@@ -33,7 +33,7 @@
             .call(d3.axisBottom(x));
 
     var y = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d.AVGPrice; })])
+        .domain([0, d3.max(data, function(d) { return +d.AVGPriceDiff; })])
         .range([ height, 0 ]);
         svg.append("g")
             .call(d3.axisLeft(y));
@@ -54,7 +54,7 @@
             .attr("d", function(d){
               return d3.line()
                 .x(function(d) { return x(d.TradingDate); })
-                .y(function(d) { return y(+d.AVGPrice); })
+                .y(function(d) { return y(+d.AVGPriceDiff); })
                 (d.values)
             })
 });
