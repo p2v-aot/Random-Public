@@ -53,7 +53,7 @@
             .attr("stroke-width", 1.5)
             .attr("d", function(d){
               return d3.line()
-                .x(function(d) { return x(d.Timestamp); })
+                .x(function(d) { return x(d.TradingDate); })
                 .y(function(d) { return y(d.Quantity); })
                 (d.values)
             })
