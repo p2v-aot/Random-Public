@@ -15,9 +15,9 @@
     //Read the data
     d3.csv("Results-OI.csv",
 
-    function(d){
-        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Quantity: d.Quantity }
-    },
+    //function(d){
+    //    return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Quantity: d.Quantity }
+    //},
 
     function(data) {
 
@@ -39,6 +39,7 @@
             .call(d3.axisLeft(y));
 
     var res = strike.map(function(d){ return d.key})
+
     var color = d3.scaleOrdinal()
         .domain(res)
         .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
