@@ -12,18 +12,6 @@
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // gridlines in x axis function
-    function make_x_gridlines() {		
-        return d3.axisBottom(x)
-            .ticks(5)
-    }
-
-    // gridlines in y axis function
-    function make_y_gridlines() {		
-        return d3.axisLeft(y)
-            .ticks(5)
-    }
-
     //Read the data
     d3.csv("Results-AVGPrice.csv",
 
@@ -49,6 +37,18 @@
         .range([ height, 0 ]);
         svg.append("g")
             .call(d3.axisLeft(y));
+
+    // gridlines in x axis function
+    function make_x_gridlines() {		
+        return d3.axisBottom(x)
+            .ticks(5)
+    }
+
+    // gridlines in y axis function
+    function make_y_gridlines() {		
+        return d3.axisLeft(y)
+            .ticks(5)
+    }
 
     var res = strike.map(function(d){ return d.key})
 
