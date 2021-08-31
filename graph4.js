@@ -16,7 +16,7 @@ d3.csv("Results-Vol-P-Neg.csv",function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()
-    .domain([150, 1500])
+    .domain([150, 1300])
     .range([ 0, width ]);
   svg.append("g")
     .call(d3.axisBottom(x));
@@ -57,7 +57,7 @@ d3.csv("Results-Vol-P-Neg.csv",function(data) {
         .append("circle")
             .attr("cx", function (d) { return x(d.StrikePrice); } )
             .attr("cy", function (d) { return y(d.Volume); } )
-            .attr("r", 1.5)
+            .attr("r", 3)
             .style("fill", "#69b3a2")
             .on("mouseover", tipMouseover)
             .on("mouseout", tipMouseout);
