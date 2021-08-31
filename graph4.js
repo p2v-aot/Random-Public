@@ -6,10 +6,11 @@
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
-        .append("g")
+        .append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", "0 0 300 300")
-        .classed("svg-content", true);
+        .classed("svg-content", true)
+        .append("g");
 
     //Read the data
     d3.csv("Results-Vol-P-Neg.csv",
