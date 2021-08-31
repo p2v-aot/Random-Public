@@ -6,7 +6,7 @@
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
-        .append("svg")
+        .append("g")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", "0 0 300 300")
         .classed("svg-content", true);
