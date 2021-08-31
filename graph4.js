@@ -13,20 +13,20 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     //Read the data
-    d3.csv("Results-AVGPrice.csv",
+    d3.csv("Results-Vol-P-Neg.csv",
 
     function(d){
-        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, CallPut : d.CallPut, Volume: d.Volume, AVGPriceDiff: d.AVGPriceDiff }
+        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, Volume: d.Volume }
     },
 
     function(data) {
 
     var strike = d3.nest()
-        .key(function(d) { return d.StrikePrice})
+        .key(function(d) { return d.TradingDate})
         .entries(data);
 
-    var x = d3.scaleTime()
-        .domain(d3.extent(data, function(d) { return d.TradingDate; }))
+    var x = d3.scaleLinear()
+        .domain(d3.extent(data, function(d) { return d.StrikePrice; }))
         .range([ 0, width ])
         .nice();
         svg.append("g")
@@ -34,45 +34,16 @@
             .call(d3.axisBottom(x));
 
     var y = d3.scaleLinear()
-        .domain([-100, 100])
+        .domain(d3.extent(data, function(d) { return d.Volume}))
         .range([ height, 0 ]);
         svg.append("g")
             .call(d3.axisLeft(y));
-
-    // gridlines in x axis function
-    function make_x_gridlines() {		
-        return d3.axisBottom(x)
-            .ticks(5)
-    }
-
-    // gridlines in y axis function
-    function make_y_gridlines() {		
-        return d3.axisLeft(y)
-            .ticks(5)
-    }
 
     var res = strike.map(function(d){ return d.key})
 
     var color = d3.scaleOrdinal()
         .domain(res)
         .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
-    // add the X gridlines
-    svg.append("g")			
-        .attr("class", "grid")
-        .attr("transform", "translate(0," + height + ")")
-        .call(make_x_gridlines()
-            .tickSize(-height)
-            .tickFormat("")
-        )
-
-    // add the Y gridlines
-    svg.append("g")			
-        .attr("class", "grid")
-        .call(make_y_gridlines()
-            .tickSize(-width)
-            .tickFormat("")
-        )
 
     svg.selectAll(".line")
         .data(strike)
@@ -83,8 +54,22 @@
             .attr("stroke-width", 2)
             .attr("d", function(d){
               return d3.line()
-                .x(function(d) { return x(d.TradingDate); })
-                .y(function(d) { return y(+d.AVGPriceDiff); })
+                .x(function(d) { return x(d.StrikePrice); })
+                .y(function(d) { return y(+d.Volume); })
                 (d.values)
             })
+
+    svg.selectAll("mybar")
+        .data(data)
+        .enter()
+        .append("rect")
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d.Value); })
+            .attr("fill", "#69b3a2")
+            .attr("d", function(d){
+                return d3.line()
+                  .x(function(d) { return x(d.StrikePrice); })
+                  .y(function(d) { return y(+d.Volume); })
+                  (d.values)
+              })
 });
