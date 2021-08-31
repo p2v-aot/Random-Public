@@ -16,7 +16,7 @@ d3.csv("Results-Vol-P-Neg.csv",function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()
-    .domain(d3.extent(data, function(d) { return d.StrikePrice; }))
+    .domain([d3.extent(data, function(d) { return d.StrikePrice; })])
     .range([ 0, width ]);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -24,7 +24,7 @@ d3.csv("Results-Vol-P-Neg.csv",function(data) {
 
   // Add Y axis
   var y = d3.scaleLinear()
-    .domain(d3.extent(data, function(d) { return d.Volume; }))
+    .domain([d3.extent(data, function(d) { return d.Volume; })])
     .range([ height, 0]);
   svg.append("g")
     .call(d3.axisLeft(y));
