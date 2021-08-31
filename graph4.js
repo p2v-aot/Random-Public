@@ -28,16 +28,39 @@ d3.csv("Results-Vol-P-Neg.csv",function(data) {
   svg.append("g")
     .call(d3.axisLeft(y));
 
-  // Add dots
-  svg.append('g')
-    .selectAll("dot")
-    .data(data)
-    .enter()
-    .append("circle")
-      .attr("cx", function (d) { return x(d.StrikePrice); } )
-      .attr("cy", function (d) { return y(d.Volume); } )
-      .attr("r", 1.5)
-      .style("fill", "#69b3a2")
+    var tooltip = d3.select("#my_dataviz").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+    
+    var tipMouseover = function(d) {
+    var html  = "<p>" + d.Volume + "</p>";
+    
+    tooltip.html(html)
+        .style("left", (d3.event.pageX + 15) + "px")
+        .style("top", (d3.event.pageY - 28) + "px")
+        .transition()
+        .duration(200)
+        .style("opacity", .9)
+    };
+    
+    var tipMouseout = function(d) {
+    tooltip.transition()
+    .duration(300) // ms
+    .style("opacity", 0);
+    };
+
+    // Add dots
+    svg.append('g')
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", function (d) { return x(d.StrikePrice); } )
+            .attr("cy", function (d) { return y(d.Volume); } )
+            .attr("r", 1.5)
+            .style("fill", "#69b3a2")
+            .on("mouseover", tipMouseover)
+            .on("mouseout", tipMouseout);
 
 })
 
