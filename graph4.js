@@ -16,7 +16,7 @@ d3.csv("Results-Vol-P-Neg.csv", function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()
-    .domain([100, 1500])
+    .domain([150, 1500])
     .range([ 0, width ]);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
