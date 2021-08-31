@@ -3,11 +3,13 @@ var margin = {top: 10, right: 30, bottom: 30, left: 60},
   width = 2024 - margin.left - margin.right,
   height = 1024 - margin.top - margin.bottom;
 
-d3.select('#mydata_viz')
-  .append('svg')
+var svg = d3.select('#mydata_viz')
+    .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .call(responsivefy);
+    .call(responsivefy)
+    .append("g")
+    .attr('transform', 'translate(${margin.left}, ${margin.top})');
 
 //Read the data
 d3.csv("Results-Vol-P-Neg.csv", function(data) {
