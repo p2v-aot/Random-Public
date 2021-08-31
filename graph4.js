@@ -23,7 +23,7 @@ d3.csv("Results-Vol-P-Neg.csv",function(data) {
 
   // Add Y axis
   var y = d3.scaleLinear()
-    .domain([20000, 40000])
+    .domain([-20000, 40000])
     .range([ height, 0]);
   svg.append("g")
     .call(d3.axisLeft(y));
