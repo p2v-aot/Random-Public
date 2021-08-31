@@ -45,20 +45,6 @@
         .domain(res)
         .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
-    svg.selectAll(".line")
-        .data(strike)
-        .enter()
-        .append("path")
-            .attr("fill", "none")
-            .attr("stroke", function(d){ return color(d.key) })
-            .attr("stroke-width", 2)
-            .attr("d", function(d){
-              return d3.line()
-                .x(function(d) { return x(d.StrikePrice); })
-                .y(function(d) { return y(+d.Volume); })
-                (d.values)
-            })
-
     svg.selectAll("mybar")
         .data(data)
         .enter()
