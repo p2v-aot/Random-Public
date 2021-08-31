@@ -24,8 +24,8 @@
         .key(function(d) { return d.TradingDate})
         .entries(data);
 
-    var x = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.StrikePrice; }))
+    var x = d3.scaleBand()
+        .domain(data.map(function(d) { return d.StrikePrice; }))
         .range([ 0, width ])
         .nice();
         svg.append("g")
