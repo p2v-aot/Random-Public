@@ -20,33 +20,21 @@
 
     function(data) {
 
-    var strike = d3.nest()
-        .key(function(d) { return d.TradingDate})
-        .entries(data);
-
     var x = d3.scaleBand()
-        .domain(data.map(function(d) { return d.StrikePrice; }))
-        .range([ 0, width ]);
+        .domain(d3.extent(data, function(d) { return d.StrikePrice; }));
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
 
     var y = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.Volume}))
-        .range([ height, 0 ]);
+        .domain([d3.min(data), d3.max(data)]);
         svg.append("g")
             .call(d3.axisLeft(y));
 
-    var res = strike.map(function(d){ return d.key})
-
-    var color = d3.scaleOrdinal()
-        .domain(res)
-        .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
-    svg.selectAll("mybar")
+    svg.append("g")
         .data(data)
         .enter()
-        .append("rect")
+        .append("dot")
             .attr("height", function(d) { return height - y(d.Volume); })
             .attr("fill", function(d){ return color(d.key) })
             .attr("x", function(d) { return x(d.StrikePrice); })
