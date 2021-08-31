@@ -32,11 +32,11 @@
             .call(d3.axisLeft(y));
 
     svg.append("g")
+        .selectAll("dot")
         .data(data)
         .enter()
-        .append("dot")
-            .attr("height", function(d) { return height - y(d.Volume); })
-            .attr("fill", function(d){ return color(d.key) })
-            .attr("x", function(d) { return x(d.StrikePrice); })
-            .attr("y", function(d) { return y(d.Volume); })
+        .append("circle")
+            .attr("cx", function(d) { return x(d.StrikePrice); })
+            .attr("cy", function(d) { return y(d.Volume); })
+            .attr("r", 5);
 });
