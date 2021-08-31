@@ -38,17 +38,10 @@
         svg.append("g")
             .call(d3.axisLeft(y));
 
-    var res = strike.map(function(d){ return d.key})
-
-    var color = d3.scaleOrdinal()
-        .domain(res)
-        .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
-
     svg.selectAll("mybar")
         .data(data)
         .enter()
         .append("rect")
-            .attr("width", x.bandwidth())
             .attr("height", function(d) { return height - y(d.Value); })
             .attr("fill", "#69b3a2")
             .attr("d", function(d){
