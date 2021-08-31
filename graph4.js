@@ -1,42 +1,44 @@
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
-    // set the dimensions and margins of the graph
-    var margin = {top: 30, right: 70, bottom: 70, left: 100},
-        width = 2048 - margin.left - margin.right,
-        height = 1024 - margin.top - margin.bottom;
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
-    // append the svg object to the body of the page
-    var svg = d3.select("div#my_dataviz")
-        .append("svg")
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 300 300")
-        .append("g")
-        .classed("svg-content", true);
-        
-    //Read the data
-    d3.csv("Results-Vol-P-Neg.csv",
+//Read the data
+d3.csv("Results-Vol-P-Neg.csv", function(data) {
 
-    function(d){
-        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, Volume: d.Volume }
-    },
+  // Add X axis
+  var x = d3.scaleLinear()
+    .domain([100, 1500])
+    .range([ 0, width ]);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
 
-    function(data) {
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([-50000, 50000])
+    .range([ height, 0]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
 
-    var x = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.StrikePrice; }));
-        svg.append("g")
-            .call(d3.axisBottom(x));
+  // Add dots
+  svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("cx", function (d) { return x(d.StrikePrice); } )
+      .attr("cy", function (d) { return y(d.Volume); } )
+      .attr("r", 1.5)
+      .style("fill", "#69b3a2")
 
-    var y = d3.scaleLinear()
-        .domain(d3.extent(data, function(d) { return d.Volume; }));
-        svg.append("g")
-            .call(d3.axisLeft(y));
-
-    svg.append("g")
-        .selectAll("dot")
-        .data(data)
-        .enter()
-        .append("circle")
-            .attr("cx", function(d) { return x(d.StrikePrice); })
-            .attr("cy", function(d) { return y(d.Volume); })
-            .attr("r", 5);
-});
+})
