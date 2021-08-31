@@ -24,11 +24,10 @@
     var x = d3.scaleLinear()
         .domain(d3.extent(data, function(d) { return d.StrikePrice; }));
         svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
 
     var y = d3.scaleLinear()
-        .domain([d3.min(data), d3.max(data)]);
+        .domain(d3.extent(data, function(d) { return d.Volume; }));
         svg.append("g")
             .call(d3.axisLeft(y));
 
