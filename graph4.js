@@ -26,8 +26,7 @@
 
     var x = d3.scaleBand()
         .domain(data.map(function(d) { return d.StrikePrice; }))
-        .range([ 0, width ])
-        .nice();
+        .range([ 0, width ]);
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
