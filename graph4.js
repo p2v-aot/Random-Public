@@ -3,7 +3,7 @@ var margin = {top: 10, right: 30, bottom: 30, left: 60},
   width = 2024 - margin.left - margin.right,
   height = 1024 - margin.top - margin.bottom;
 
-var svg = d3.select('#mydata_viz')
+var svg = d3.select('#my_dataviz')
     .append('svg')
     .attr('width', width)
     .attr('height', height)
