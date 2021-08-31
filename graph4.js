@@ -9,7 +9,7 @@ var svg = d3.select('#my_dataviz')
     .attr('height', height)
     .call(responsivefy)
     .append("g")
-    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+    .attr('transform', "translate(" + margin.left + ", " + margin.top + ")");
 
 //Read the data
 d3.csv("Results-Vol-P-Neg.csv",function(data) {
