@@ -12,13 +12,7 @@ var svg = d3.select('#my_dataviz')
     .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
 
 //Read the data
-d3.csv("Results-Vol-P-Neg.csv",
-
-function(d){
-    return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, Volume : d.Volume }
-},
-
-function(data) {
+d3.csv("Results-Vol-P-Neg.csv",function(data) {
 
   // Add X axis
   var x = d3.scaleLinear()
