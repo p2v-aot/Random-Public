@@ -38,16 +38,18 @@
         svg.append("g")
             .call(d3.axisLeft(y));
 
+    var res = strike.map(function(d){ return d.key})
+
+    var color = d3.scaleOrdinal()
+        .domain(res)
+        .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
+
     svg.selectAll("mybar")
         .data(data)
         .enter()
         .append("rect")
-            .attr("height", function(d) { return height - y(d.Value); })
-            .attr("fill", "#69b3a2")
-            .attr("d", function(d){
-                return d3.line()
-                  .x(function(d) { return x(d.StrikePrice); })
-                  .y(function(d) { return y(+d.Volume); })
-                  (d.values)
-              })
+            .attr("height", function(d) { return height - y(d.Volume); })
+            .attr("fill", function(d){ return color(d.key) })
+            .attr("x", function(d) { return x(d.StrikePrice); })
+            .attr("y", function(d) { return y(d.Volume); })
 });
