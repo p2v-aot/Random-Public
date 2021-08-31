@@ -40,6 +40,10 @@ function responsivefy(svg) {
     }
   }
 
+var margin = {top: 10, right: 30, bottom: 30, left: 60},
+  width = 2024 - margin.left - margin.right,
+  height = 1024 - margin.top - margin.bottom;
+
 d3.select('#mydata_viz')
   .append('svg')
     .attr('width', width)
