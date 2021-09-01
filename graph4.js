@@ -33,7 +33,7 @@
     .style("opacity", 0);
     
     var tipMouseover = function(d) {
-    var html  = "<p>Strike: " + d.StrikePrice + "</p><br/><p>Volume: " + d.Volume + "</p>";
+    var html  = "<p>Strike: " + d.StrikePrice + "</p><p>Volume: " + d.Volume + "</p>";
     
     tooltip.html(html)
         .style("left", (d3.event.pageX + 15) + "px")

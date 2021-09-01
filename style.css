@@ -19,7 +19,7 @@ body {
     width:  auto;
     height: auto;
     pointer-events: none;
-    background-color: white;
+    background-color: #dcdcdc;
   }
   
   .ticks {
