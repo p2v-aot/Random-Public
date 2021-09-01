@@ -19,19 +19,13 @@
     },
 
     function(data) {
-        var x = d3.scaleTime()
-        .domain(d3.extent(data, function(d) { return d.TradingDate; }))
-        .range([ 0, width ])
-        .nice();
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
-
-        var y = d3.scaleLinear()
-            .domain([-100, 100])
-            .range([ height, 0 ]);
-            svg.append("g")
-                .call(d3.axisLeft(y));
+        d3.selectAll("p")
+            .data(data)
+            .enter()
+            append("p")
+            .text(function(d) {
+                return d.TradingDate + ", " + d.Volume;
+            })
     });
 
     
