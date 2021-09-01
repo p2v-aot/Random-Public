@@ -22,7 +22,7 @@
         d3.selectAll("p")
             .data(data)
             .enter()
-            append("p")
+            .append("p")
             .text(function(d) {
                 return d.TradingDate + ", " + d.Volume;
             })
