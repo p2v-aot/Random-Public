@@ -56,10 +56,4 @@ dispatch.on('load',function(json) {
         dataTable.redrawGroup();
     })
 
-    dc.dataCount(".dc-data-count")
-        .dimension(facts)
-        .group(all);
-
-    dc.renderAll();
-
 });
