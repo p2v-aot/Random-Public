@@ -1,4 +1,3 @@
-var dataTable = dc.dataTable("table#list");
 var dispatch = d3.dispatch('load','filterDate','filterHeight');
 
 d3.json('Results-Vol.json',function(json){
