@@ -12,7 +12,9 @@
         .attr('transform', "translate(" + margin.left + ", " + margin.top + ")");
 
     //Read the data
-    d3.csv("Results-Vol-P-Neg.csv",function(data) {
+    d3.csv("Results-Vol-P-Neg.csv",
+    
+    function(data) {
 
     // Add X axis
     var x = d3.scaleLinear()
