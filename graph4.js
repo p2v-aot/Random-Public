@@ -1,39 +1,39 @@
 
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-  width = 2024 - margin.left - margin.right,
-  height = 1024 - margin.top - margin.bottom;
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = 2024 - margin.left - margin.right,
+        height = 1024 - margin.top - margin.bottom;
 
-var svg = d3.select('#my_dataviz')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .call(responsivefy)
-    .append("g")
-    .attr('transform', "translate(" + margin.left + ", " + margin.top + ")");
+    var svg = d3.select('#my_dataviz')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .call(responsivefy)
+        .append("g")
+        .attr('transform', "translate(" + margin.left + ", " + margin.top + ")");
 
-//Read the data
-d3.csv("Results-Vol-P-Neg.csv",function(data) {
+    //Read the data
+    d3.csv("Results-Vol-P-Neg.csv",function(data) {
 
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([150, 1300])
-    .range([ 0, width ]);
-  svg.append("g")
-    .call(d3.axisBottom(x));
+    // Add X axis
+    var x = d3.scaleLinear()
+        .domain([150, 1300])
+        .range([ 0, width ]);
+    svg.append("g")
+        .call(d3.axisBottom(x));
 
-  // Add Y axis
-  var y = d3.scaleLinear()
-    .domain([-20000, 40000])
-    .range([ height, 0]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
+    // Add Y axis
+    var y = d3.scaleLinear()
+        .domain([-20000, 40000])
+        .range([ height, 0]);
+    svg.append("g")
+        .call(d3.axisLeft(y));
 
     var tooltip = d3.select("#my_dataviz").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
     
     var tipMouseover = function(d) {
-    var html  = "<p>" + d.Volume + "</p>";
+    var html  = "<p>Strike: " + d.StrikePrice + "</p><br/><p>Volume: " + d.Volume + "</p>";
     
     tooltip.html(html)
         .style("left", (d3.event.pageX + 15) + "px")
