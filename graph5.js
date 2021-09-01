@@ -1,58 +1,23 @@
-var dispatch = d3.dispatch('load','filterDate','filterHeight');
 
-d3.json('Results-Vol.json',function(json){
-    dispatch.load(json)
-});
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 2024 - margin.left - margin.right,
+    height = 1024 - margin.top - margin.bottom;
 
-dispatch.on('load',function(json) {
-    var formatNumber = d3.format( ",d"); //What is this for?
-    var facts = crossfilter(json);
-    var tradingDate = facts.dimension(function(d) {
-        return +d.TradingDate;
+    var svg = d3.select('#my_dataviz')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .call(responsivefy)
+        .append("g")
+        .attr('transform', "translate(" + margin.left + ", " + margin.top + ")");
+
+    //Read the data
+    d3.json("Results-Vol.json",
+
+    function(d){
+        return { TradingDate : d3.timeParse("%Y-%m-%d")(d.TradingDate), StrikePrice : d.StrikePrice, Volume : d.Volume }
+    },
+
+    function(data) {
+        console.log(d3.extent(data, function(d) { return d.TradingDate; }))
     });
-    var accessorDate = function(d) {
-        return d.TradingDate;
-    };
-//			xf.add(json);
-    var range = d3.extent(json, accessorDate);
-    var all = facts.groupAll();
-
-    d3.select("div#slider")
-        .call(d3.slider().axis(true).min(range[0]).max(range[1]).value(range)
-        .on("slide", function(evt,value) {
-            dispatch.filterDate(value);
-            d3.select("#slidertextmin").text(Math.floor(value[0]));
-            d3.select("#slidertextmax").text(Math.floor(value[1]))
-        }))
-
-    FieldNames = [
-        "",
-        "TradingDate",
-        "StrikePrice",
-        "Volume"
-    ];
-
-    d3.select("tr#FieldNames").selectAll("th")
-        .data(FieldNames)
-        .enter()
-        .append("th") 
-        .append("text")
-        .text(function(d){ 
-            return d;
-        });
-
-    dataTable
-        .dimension(tradingDate)
-        .columns([
-            function(d) {return "";},
-            function(d) {return d.TradingDate;},
-            function(d) {return d.StrikePrice;},
-            function(d) {return d.Volume;}
-        ]);   
-
-    dispatch.on('filterDate',function(value){
-        dataTable.replaceFilter(dc.filters.RangedFilter(value[0], value[1]));
-        dataTable.redrawGroup();
-    })
-
-});
