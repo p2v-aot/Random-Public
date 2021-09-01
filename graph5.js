@@ -19,7 +19,7 @@
     },
 
     function(data) {
-        console.log(d3.extent(data, function(d) { return d.TradingDate; }))
+        print((d3.extent(data, function(d) { return d.TradingDate; })))
     });
 
     
