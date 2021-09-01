@@ -18,8 +18,9 @@ body {
     font-size: 12px;
     width:  auto;
     height: auto;
+    margin: 5px;
     pointer-events: none;
-    background-color: white;
+    background-color: #dcdcdc;
   }
   
   .ticks {

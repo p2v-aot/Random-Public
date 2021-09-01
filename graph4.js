@@ -1,44 +1,68 @@
 
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-  width = 2024 - margin.left - margin.right,
-  height = 1024 - margin.top - margin.bottom;
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = 2024 - margin.left - margin.right,
+        height = 1024 - margin.top - margin.bottom;
 
-var svg = d3.select('#my_dataviz')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .call(responsivefy)
-    .append("g")
-    .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+    var svg = d3.select('#my_dataviz')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .call(responsivefy)
+        .append("g")
+        .attr('transform', "translate(" + margin.left + ", " + margin.top + ")");
 
-//Read the data
-d3.csv("Results-Vol-P-Neg.csv",function(data) {
+    //Read the data
+    d3.csv("Results-Vol-P-Neg.csv",
+    
+    function(data) {
 
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([d3.extent(data, function(d) { return d.StrikePrice; })])
-    .range([ 0, width ]);
-  svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+    // Add X axis
+    var x = d3.scaleLinear()
+        .domain([150, 1300])
+        .range([ 0, width ]);
+    svg.append("g")
+        .call(d3.axisBottom(x));
 
-  // Add Y axis
-  var y = d3.scaleLinear()
-    .domain([d3.extent(data, function(d) { return d.Volume; })])
-    .range([ height, 0]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
+    // Add Y axis
+    var y = d3.scaleLinear()
+        .domain([-20000, 40000])
+        .range([ height, 0]);
+    svg.append("g")
+        .call(d3.axisLeft(y));
 
-  // Add dots
-  svg.append('g')
-    .selectAll("dot")
-    .data(data)
-    .enter()
-    .append("circle")
-      .attr("cx", function (d) { return x(d.StrikePrice); } )
-      .attr("cy", function (d) { return y(d.Volume); } )
-      .attr("r", 1.5)
-      .style("fill", "#69b3a2")
+    var tooltip = d3.select("#my_dataviz").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+    
+    var tipMouseover = function(d) {
+    var html  = "<div class=\"tooltip\"><p>Strike: " + d.StrikePrice + "</p><p>Volume: " + d.Volume + "</p></div>";
+    
+    tooltip.html(html)
+        .style("left", (d3.event.pageX + 15) + "px")
+        .style("top", (d3.event.pageY - 28) + "px")
+        .transition()
+        .duration(200)
+        .style("opacity", .9)
+    };
+    
+    var tipMouseout = function(d) {
+    tooltip.transition()
+    .duration(300) // ms
+    .style("opacity", 0);
+    };
+
+    // Add dots
+    svg.append('g')
+        .selectAll("dot")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", function (d) { return x(d.StrikePrice); } )
+            .attr("cy", function (d) { return y(d.Volume); } )
+            .attr("r", 3)
+            .style("fill", "#69b3a2")
+            .on("mouseover", tipMouseover)
+            .on("mouseout", tipMouseout);
 
 })
 
